@@ -60,38 +60,69 @@ export class SoundService {
     if (!this.audioContext) return;
 
     const now = this.audioContext.currentTime;
-    
-    // "Well done!" melody
-    // Using specific frequencies and timing to create speech-like sounds
-    const speech = [
-      { freq: 400, duration: 0.15, time: 0 },    // We-
-      { freq: 350, duration: 0.15, time: 0.15 }, // -ll
-      { freq: 500, duration: 0.25, time: 0.3 },  // do-
-      { freq: 400, duration: 0.3, time: 0.55 },  // -ne!
+
+    // Define multiple "Well done!" melodies for random selection
+    const melodies = [
+        [
+            { freq: 400, duration: 0.15, time: 0 },    // We-
+            { freq: 350, duration: 0.15, time: 0.15 }, // -ll
+            { freq: 500, duration: 0.25, time: 0.3 },  // do-
+            { freq: 400, duration: 0.3, time: 0.55 },  // -ne!
+        ],
+        [
+            { freq: 500, duration: 0.2, time: 0 },     // Con-
+            { freq: 600, duration: 0.15, time: 0.2 },  // -gra-
+            { freq: 700, duration: 0.25, time: 0.35 }, // -tu-
+            { freq: 800, duration: 0.3, time: 0.6 },   // -la-
+            { freq: 900, duration: 0.35, time: 0.9 },  // -tions!
+        ],
+        [
+            { freq: 450, duration: 0.15, time: 0 },    // Awe-
+            { freq: 500, duration: 0.15, time: 0.15 }, // -some
+            { freq: 600, duration: 0.2, time: 0.3 },   // job!
+            { freq: 700, duration: 0.3, time: 0.55 },  
+        ]
     ];
 
-    speech.forEach(({ freq, duration, time }) => {
-      this.createVoiceNote(freq, now + time, duration);
-    });
+    // Select a random melody each time
+    const melody = melodies[Math.floor(Math.random() * melodies.length)];
+    console.log(melody);
 
-    // Add a cheerful sparkle effect
+    // Play the selected melody
+    melody.forEach(({ freq, duration, time }, index) => {
+      // Check if this is the last note in the melody
+      const isLastNote = index === melody.length - 1;
+      // If it's the last note, extend the duration
+      const adjustedDuration = isLastNote ? duration * 3 : duration * 2;
+      this.createVoiceNote(freq, now + time, adjustedDuration);
+  });
+  
+
+    // Add a more dynamic and cheerful sparkle effect
     setTimeout(() => {
-      if (!this.audioContext || !this.gainNode) return;
-      const sparkle = this.audioContext.createOscillator();
-      const sparkleGain = this.audioContext.createGain();
-      
-      sparkle.type = 'sine';
-      sparkle.frequency.setValueAtTime(1200, this.audioContext.currentTime);
-      sparkle.frequency.exponentialRampToValueAtTime(2400, this.audioContext.currentTime + 0.1);
-      
-      sparkleGain.gain.setValueAtTime(0.2, this.audioContext.currentTime);
-      sparkleGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.1);
-      
-      sparkle.connect(sparkleGain);
-      sparkleGain.connect(this.gainNode);
-      
-      sparkle.start();
-      sparkle.stop(this.audioContext.currentTime + 0.1);
+        if (!this.audioContext || !this.gainNode) return;
+
+        // Randomize sparkle properties for variety
+        const sparkleCount = 30 + Math.floor(Math.random() * 10); // Play 3-5 sparkles
+        const sparkleLen = 0.1;
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = this.audioContext.createOscillator();
+            const sparkleGain = this.audioContext.createGain();
+
+            sparkle.type = 'sine';
+            sparkle.frequency.setValueAtTime(1000 + Math.random() * 1000, this.audioContext.currentTime);
+            sparkle.frequency.exponentialRampToValueAtTime(2000 + Math.random() * 2000, this.audioContext.currentTime + 0.1);
+
+            sparkleGain.gain.setValueAtTime(0.2, this.audioContext.currentTime);
+            sparkleGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.1);
+
+            sparkle.connect(sparkleGain);
+            sparkleGain.connect(this.gainNode);
+
+            sparkle.start(this.audioContext.currentTime + sparkleLen * i);
+            sparkle.stop(this.audioContext.currentTime + sparkleLen * i + sparkleLen);
+        }
     }, 850);
-  }
+}
+
 }
