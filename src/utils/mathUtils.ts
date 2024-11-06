@@ -1,6 +1,6 @@
 export const generateExercises = (start: number, end: number, count: number) => {
   const exercises = [];
-  const operations: Array<'+' | '-' | '×' | '÷'> = ['+', '-', '×', '÷'];
+  const operations: Array<'+' | '-'> = ['+', '-']; // Only addition and subtraction
 
   for (let i = 0; i < count; i++) {
     const operation = operations[Math.floor(Math.random() * operations.length)];
@@ -14,18 +14,9 @@ export const generateExercises = (start: number, end: number, count: number) => 
         break;
       case '-':
         num1 = Math.floor(Math.random() * (end - start + 1)) + start;
-        num2 = Math.floor(Math.random() * num1) + start;
+        // Ensure num2 is smaller than num1 to avoid negative numbers
+        num2 = Math.floor(Math.random() * (num1 - start + 1)) + start;
         answer = num1 - num2;
-        break;
-      case '×':
-        num1 = Math.floor(Math.random() * (Math.min(end, 10) - start + 1)) + start;
-        num2 = Math.floor(Math.random() * (Math.min(end, 10) - start + 1)) + start;
-        answer = num1 * num2;
-        break;
-      case '÷':
-        num2 = Math.floor(Math.random() * (Math.min(end, 10) - start + 1)) + start;
-        answer = Math.floor(Math.random() * (Math.min(end, 10) - start + 1)) + start;
-        num1 = num2 * answer;
         break;
     }
 

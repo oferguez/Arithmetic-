@@ -1,7 +1,7 @@
 export interface Exercise {
   num1: number;
   num2: number;
-  operation: '+' | '-' | '×' | '÷';
+  operation: '+' | '-';
   answer: number;
 }
 
