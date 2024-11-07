@@ -1,7 +1,7 @@
 export class SoundService {
   private audioContext: AudioContext | null = null;
   private gainNode: GainNode | null = null;
-  private soundFiles = ['VictorySounds/1.mp3', 'VictorySounds/2.mp3', 'VictorySounds/3.mp3', 'VictorySounds/4.mp3', 'VictorySounds/5.mp3'];
+  private soundFiles = ['1.mp3', '2.mp3', '3.mp3', '4.mp3', '5.mp3'];
   private playedFiles: string[] = [];
 
   constructor() {
@@ -31,20 +31,29 @@ export class SoundService {
     const randomFile = availableFiles[Math.floor(Math.random() * availableFiles.length)];
     this.playedFiles.push(randomFile);
 
+    const soundPath = `/VictorySound/${randomFile}`; //debugger;
     // Fetch and decode the audio
-    const response = await fetch(`/VictorySound/${randomFile}`);
+    const response = await fetch(soundPath);
     if (!response.ok) {
       console.error(`Failed to fetch audio file: /VictorySound/${randomFile}`, response.status, response.body);
       return;
     }
 
     const arrayBuffer = await response.arrayBuffer();
-    const audioBuffer = await this.audioContext?.decodeAudioData(arrayBuffer) ?? null;
+
+    let audioBuffer;
+    try {
+      audioBuffer = await this.audioContext!.decodeAudioData(arrayBuffer);
+    } catch (error) {
+      console.error("Failed!! to decode audio data:", error);
+      return;
+    }
+
     if (!audioBuffer) {
       console.error("Failed to decode audio: AudioContext is not initialized.");
       return;
     }
-    
+    //debugger;
     // Apply random start and end times
     const maxStartShift = Math.min(2, audioBuffer.duration - 0.5); // Max 2 seconds or within file length
     const startShift = Math.random() * maxStartShift;
@@ -118,7 +127,7 @@ export class SoundService {
   playSuccess() {
     this.init();
     if (!this.audioContext) return;
-
+    //debugger;
     // Call the new function to play an MP3 sound with random effects
     this.playRandomSound();
 
