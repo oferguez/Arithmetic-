@@ -1,7 +1,7 @@
 export class SoundService {
   private audioContext: AudioContext | null = null;
   private gainNode: GainNode | null = null;
-  private soundFiles = ['VictorySounds/1.mp3', 'VictorySounds/2.mp3', 'VictorySounds/3.mp3', 'VictorySounds/4.mp3', 'VictorySounds/5.mp3']
+  private soundFiles = ['VictorySounds/1.mp3', 'VictorySounds/2.mp3', 'VictorySounds/3.mp3', 'VictorySounds/4.mp3', 'VictorySounds/5.mp3'];
   private playedFiles: string[] = [];
 
   constructor() {
@@ -35,7 +35,6 @@ export class SoundService {
     const response = await fetch(`/VictorySound/${randomFile}`);
     const arrayBuffer = await response.arrayBuffer();
     const audioBuffer = await this.audioContext?.decodeAudioData(arrayBuffer) ?? null;
-
     if (!audioBuffer) {
       console.error("Failed to decode audio: AudioContext is not initialized.");
       return;
@@ -48,14 +47,67 @@ export class SoundService {
     const endTime = audioBuffer.duration - Math.random() * maxEndCutoff;
 
     // Play the sound with random timings
-    const source = this.audioContext.createBufferSource();
+    const source = this.audioContext?.createBufferSource() ?? null;
+    if (!source) {
+      console.error("Failed to createBufferSource: AudioContext is not initialized.");
+      return;
+    }
     source.buffer = audioBuffer;
+
+    if (!this.gainNode) {
+      console.error("audio failure: gainNode is not initialized.");
+      return;
+    }
     source.connect(this.gainNode);
+
+    if (!this.audioContext) {
+      console.error("audio failure: audioContext is not initialized.");
+      return;
+    }
     source.start(this.audioContext.currentTime, startShift);
     source.stop(this.audioContext.currentTime + endTime - startShift);
 
     // Log the playback for debugging
     console.log(`Playing ${randomFile} from ${startShift.toFixed(2)}s to ${endTime.toFixed(2)}s`);
+  }
+
+  private createVoiceNote(frequency: number, startTime: number, duration: number) {
+    if (!this.audioContext || !this.gainNode) return;
+
+    // Carrier oscillator (main tone)
+    const carrier = this.audioContext.createOscillator();
+    carrier.type = 'sine';
+    carrier.frequency.setValueAtTime(frequency, startTime);
+
+    // Modulator oscillator (for effects)
+    const modulator = this.audioContext.createOscillator();
+    modulator.type = 'sine';
+    modulator.frequency.setValueAtTime(frequency * 0.1, startTime);
+
+    // Modulation gain
+    const modGain = this.audioContext.createGain();
+    modGain.gain.setValueAtTime(frequency * 0.5, startTime);
+
+    // Note envelope
+    const noteGain = this.audioContext.createGain();
+    noteGain.gain.setValueAtTime(0, startTime);
+    noteGain.gain.linearRampToValueAtTime(1, startTime + 0.05);
+    noteGain.gain.setValueAtTime(1, startTime + duration - 0.05);
+    noteGain.gain.linearRampToValueAtTime(0, startTime + duration);
+
+    // Connect modulation chain
+    modulator.connect(modGain);
+    modGain.connect(carrier.frequency);
+
+    // Connect audio chain
+    carrier.connect(noteGain);
+    noteGain.connect(this.gainNode);
+
+    // Schedule playback
+    carrier.start(startTime);
+    carrier.stop(startTime + duration);
+    modulator.start(startTime);
+    modulator.stop(startTime + duration);
   }
 
   playSuccess() {
