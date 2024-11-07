@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Confetti from 'react-confetti';
 import { useSpring, animated } from '@react-spring/web';
 import { Heart, Sparkles } from 'lucide-react';
+import { SoundService } from '../services/SoundService';
+
+const soundService = new SoundService();
 
 export const Celebration: React.FC = () => {
   const bounce = useSpring({
@@ -13,6 +16,10 @@ export const Celebration: React.FC = () => {
     ],
     config: { tension: 300, friction: 10 },
   });
+
+  useEffect(() => {
+    soundService.playSuccess();
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">

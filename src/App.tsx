@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { Howl } from 'howler';
 import { NumberInput } from './components/NumberInput';
 import { ExerciseCard } from './components/ExerciseCard';
 import { Celebration } from './components/Celebration';
 import { generateExercises } from './utils/mathUtils';
 import { GameState } from './types';
-import { Brain, Trophy, RotateCcw } from 'lucide-react';
-import { SoundService } from './services/SoundService';
+import { Brain, Trophy } from 'lucide-react';
 
-const soundService = new SoundService();
+const successSound = new Howl({
+  src: ['https://assets.mixkit.co/active_storage/sfx/2018/success-1-6297.wav'],
+  volume: 0.5,
+});
 
 function App() {
   const [started, setStarted] = useState(false);
   const [startRange, setStartRange] = useState(1);
   const [endRange, setEndRange] = useState(10);
-  const [exerciseCount, setExerciseCount] = useState(5);
+  const [exerciseCount, setExerciseCount] = useState(10);
   const [gameState, setGameState] = useState<GameState>({
     currentExercise: 0,
     exercises: [],
@@ -32,14 +35,9 @@ function App() {
     setStarted(true);
   };
 
-  const handleRestart = () => {
-    handleStart();
-  };
-
   const handleAnswer = (correct: boolean) => {
     if (correct) {
-      soundService.playSuccess();
-      
+      successSound.play();
       setGameState((prev) => ({
         ...prev,
         score: prev.score + 1,
@@ -106,21 +104,12 @@ function App() {
             <p className="text-xl mb-6">
               You got {gameState.score} out of {exerciseCount} correct!
             </p>
-            <div className="flex gap-4 justify-center">
-              <button
-                onClick={() => setStarted(false)}
-                className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-8 rounded-full text-xl transform transition hover:scale-105"
-              >
-                New Game
-              </button>
-              <button
-                onClick={handleRestart}
-                className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full text-xl transform transition hover:scale-105 flex items-center"
-              >
-                <RotateCcw className="w-6 h-6 mr-2" />
-                Try Again
-              </button>
-            </div>
+            <button
+              onClick={() => setStarted(false)}
+              className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-8 rounded-full text-xl transform transition hover:scale-105"
+            >
+              Play Again
+            </button>
           </div>
         ) : (
           <>
@@ -131,13 +120,6 @@ function App() {
               <p className="text-lg text-purple-500">
                 Score: {gameState.score}
               </p>
-              <button
-                onClick={handleRestart}
-                className="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transform transition hover:scale-105 flex items-center mx-auto"
-              >
-                <RotateCcw className="w-5 h-5 mr-2" />
-                Restart
-              </button>
             </div>
             <ExerciseCard
               exercise={gameState.exercises[gameState.currentExercise]}
