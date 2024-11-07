@@ -33,6 +33,11 @@ export class SoundService {
 
     // Fetch and decode the audio
     const response = await fetch(`/VictorySound/${randomFile}`);
+    if (!response.ok) {
+      console.error(`Failed to fetch audio file: /VictorySound/${randomFile}`, response.status, response.body);
+      return;
+    }
+
     const arrayBuffer = await response.arrayBuffer();
     const audioBuffer = await this.audioContext?.decodeAudioData(arrayBuffer) ?? null;
     if (!audioBuffer) {
