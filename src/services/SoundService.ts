@@ -19,6 +19,7 @@ export class SoundService {
   }
 
   private async playRandomSound() {
+
     // Ensure initialization
     this.init();
 
@@ -66,11 +67,11 @@ export class SoundService {
       startCutoff = Math.random() * randomBounds;
       endCutoff = audioBuffer.duration - Math.random() * randomBounds;
       endCutoff = Math.min(startCutoff + 6, endCutoff);
-      console.log(`randomizing sound: ${randomFile} randomBounds: ${randomBounds} duration:${audioBuffer.duration} start cutoff: ${startCutoff} end cutoff: ${endCutoff}`);
+      //console.log(`randomizing sound: ${randomFile} randomBounds: ${randomBounds} duration:${audioBuffer.duration} start cutoff: ${startCutoff} end cutoff: ${endCutoff}`);
     }
     else
     {
-      console.log(`sound: ${randomFile} duration:${audioBuffer.duration} start cutoff: ${startCutoff} end cutoff: ${endCutoff}`);
+      //console.log(`sound: ${randomFile} duration:${audioBuffer.duration} start cutoff: ${startCutoff} end cutoff: ${endCutoff}`);
     }
     
 
@@ -178,7 +179,7 @@ export class SoundService {
 
     // Select a random melody each time
     const melody = melodies[Math.floor(Math.random() * melodies.length)];
-    console.log(melody);
+    //console.log(melody);
 
     // Play the selected melody
     melody.forEach(({ freq, duration, time }, index) => {
