@@ -31,7 +31,7 @@ export class SoundService {
     const randomFile = availableFiles[Math.floor(Math.random() * availableFiles.length)];
     this.playedFiles.push(randomFile);
 
-    const soundPath = `/VictorySound/${randomFile}`; //debugger;
+    const soundPath = `/VictorySounds/${randomFile}`; //debugger;
     // Fetch and decode the audio
     const response = await fetch(soundPath);
     if (!response.ok) {
@@ -45,7 +45,7 @@ export class SoundService {
     try {
       audioBuffer = await this.audioContext!.decodeAudioData(arrayBuffer);
     } catch (error) {
-      console.error("Failed!! to decode audio data:", error);
+      console.error(`Failed!! to decode ${soundPath} with size ${arrayBuffer.byteLength} audio data:`, error);
       return;
     }
 
@@ -55,10 +55,29 @@ export class SoundService {
     }
     //debugger;
     // Apply random start and end times
-    const maxStartShift = Math.min(2, audioBuffer.duration - 0.5); // Max 2 seconds or within file length
-    const startShift = Math.random() * maxStartShift;
-    const maxEndCutoff = Math.min(2, audioBuffer.duration - startShift); // Max 2 seconds or remaining length
-    const endTime = audioBuffer.duration - Math.random() * maxEndCutoff;
+
+    let startCutoff = 0;
+    let endCutoff = audioBuffer.duration;
+    const randomBounds = audioBuffer.duration/2 - 1;
+
+    if (audioBuffer.duration > 4)
+    {
+      
+      startCutoff = Math.random() * randomBounds;
+      endCutoff = audioBuffer.duration - Math.random() * randomBounds;
+      endCutoff = Math.min(startCutoff + 6, endCutoff);
+      console.log(`randomizing sound: ${randomFile} randomBounds: ${randomBounds} duration:${audioBuffer.duration} start cutoff: ${startCutoff} end cutoff: ${endCutoff}`);
+    }
+    else
+    {
+      console.log(`sound: ${randomFile} duration:${audioBuffer.duration} start cutoff: ${startCutoff} end cutoff: ${endCutoff}`);
+    }
+    
+
+    // const maxStartShift = Math.min(2, audioBuffer.duration - 0.5); // Max 2 seconds or within file length
+    // const startShift = Math.random() * maxStartShift;
+    // const maxEndCutoff = Math.min(2, audioBuffer.duration - startShift); // Max 2 seconds or remaining length
+    // const endTime = audioBuffer.duration - Math.random() * maxEndCutoff;
 
     // Play the sound with random timings
     const source = this.audioContext?.createBufferSource() ?? null;
@@ -78,11 +97,12 @@ export class SoundService {
       console.error("audio failure: audioContext is not initialized.");
       return;
     }
-    source.start(this.audioContext.currentTime, startShift);
-    source.stop(this.audioContext.currentTime + endTime - startShift);
+    const duration = endCutoff - startCutoff;
+    source.start(this.audioContext.currentTime, startCutoff);
+    source.stop(this.audioContext.currentTime + duration);
 
     // Log the playback for debugging
-    console.log(`Playing ${randomFile} from ${startShift.toFixed(2)}s to ${endTime.toFixed(2)}s`);
+    //console.log(`Playing ${randomFile} from ${startShift.toFixed(2)}s to ${endTime.toFixed(2)}s`);
   }
 
   private createVoiceNote(frequency: number, startTime: number, duration: number) {
