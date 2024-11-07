@@ -36,7 +36,7 @@ function App() {
   };
 
   const handleAnswer = (correct: boolean) => {
-    console.log('handleAnswer: ', correct)
+    console.log('handleAnswer: ', correct);
     debugger;
     if (correct) {
       successSound.play();
