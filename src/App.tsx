@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Howl } from 'howler';
+//import { Howl } from 'howler';
 import { NumberInput } from './components/NumberInput';
 import { ExerciseCard } from './components/ExerciseCard';
 import { Celebration } from './components/Celebration';
@@ -7,10 +7,10 @@ import { generateExercises } from './utils/mathUtils';
 import { GameState } from './types';
 import { Brain, Trophy } from 'lucide-react';
 
-const successSound = new Howl({
-  src: ['https://assets.mixkit.co/active_storage/sfx/2018/success-1-6297.wav'],
-  volume: 0.5,
-});
+// const successSound = new Howl({
+//   src: ['https://assets.mixkit.co/active_storage/sfx/2018/success-1-6297.wav'],
+//   volume: 0.5,
+// });
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -36,10 +36,10 @@ function App() {
   };
 
   const handleAnswer = (correct: boolean) => {
-    console.log('handleAnswer: ', correct);
-    debugger;
+    // console.log('handleAnswer: ', correct);
+    // debugger;
     if (correct) {
-      successSound.play();
+      //successSound.play();
       setGameState((prev) => ({
         ...prev,
         score: prev.score + 1,

@@ -1,6 +1,7 @@
 export const generateExercises = (start: number, end: number, count: number) => {
   const exercises = [];
-  const operations: Array<'+' | '-' | '×' | '÷'> = ['+', '-'];//['+', '-', '×', '÷'];
+  //const operations: Array<'+' | '-' | '×' | '÷'> = ['+', '-', '×', '÷'];
+  const operations: Array<'+' | '-' > = ['+', '-'];
 
   for (let i = 0; i < count; i++) {
     const operation = operations[Math.floor(Math.random() * operations.length)];
