@@ -36,6 +36,7 @@ function App() {
   };
 
   const handleAnswer = (correct: boolean) => {
+    console.log('handleAnswer: ', correct)
     if (correct) {
       successSound.play();
       setGameState((prev) => ({
