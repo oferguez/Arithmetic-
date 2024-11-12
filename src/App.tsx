@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 //import { Howl } from 'howler';
 import { NumberInput } from './components/NumberInput';
 import { ExerciseCard } from './components/ExerciseCard';
@@ -6,11 +6,6 @@ import { Celebration } from './components/Celebration';
 import { generateExercises } from './utils/mathUtils';
 import { GameState } from './types';
 import { Brain, Trophy, RotateCcw } from 'lucide-react';
-
-// const successSound = new Howl({
-//   src: ['https://assets.mixkit.co/active_storage/sfx/2018/success-1-6297.wav'],
-//   volume: 0.5,
-// });
 
 function App() {
   const [started, setStarted] = useState(false);
