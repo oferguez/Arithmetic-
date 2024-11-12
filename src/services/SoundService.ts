@@ -32,11 +32,11 @@ export class SoundService {
     const randomFile = availableFiles[Math.floor(Math.random() * availableFiles.length)];
     this.playedFiles.push(randomFile);
 
-    const soundPath = `/Arithmetics/VictorySounds/${randomFile}`; //debugger;
+    const soundPath = `/Arithmetics-/VictorySounds/${randomFile}`; //debugger;
     // Fetch and decode the audio
     const response = await fetch(soundPath);
     if (!response.ok) {
-      console.error(`Failed to fetch audio file: /VictorySound/${randomFile}`, response.status, response.body);
+      console.error(`Failed to fetch audio file: ${soundPath}`, response.status, response.body);
       return;
     }
 
