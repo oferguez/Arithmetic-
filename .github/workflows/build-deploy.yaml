@@ -23,7 +23,7 @@ jobs:
         env:
           # Use the GH_TOKEN secret to authenticate
           GIT_USER: 'oferguez'
-          GIT_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIT_TOKEN: ${{ secrets.GH_ACTIONS }}
         run: |
           echo GIT_TOKEN: $GIT_TOKEN
           echo GIT_USER: $GIT_USER
