@@ -1,5 +1,4 @@
 import { useState } from 'react';
-//import { Howl } from 'howler';
 import { NumberInput } from './components/NumberInput';
 import { ExerciseCard } from './components/ExerciseCard';
 import { Celebration } from './components/Celebration';
@@ -36,7 +35,6 @@ function App() {
 
   const handleAnswer = (correct: boolean) => {
     if (correct) {
-      //successSound.play();
       setGameState((prev) => ({
         ...prev,
         score: prev.score + 1,
