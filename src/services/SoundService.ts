@@ -32,7 +32,7 @@ export class SoundService {
     const randomFile = availableFiles[Math.floor(Math.random() * availableFiles.length)];
     this.playedFiles.push(randomFile);
 
-    const soundPath = `public/Arithmetic-/VictorySounds/${randomFile}`; //debugger;
+    const soundPath = `public/VictorySounds/${randomFile}`; //debugger;
     // Fetch and decode the audio
     const response = await fetch(soundPath);
     if (!response.ok) {
