@@ -69,7 +69,7 @@ function App() {
             </h2>
             <div className="flex flex-wrap gap-8 mb-8">
               <NumberInput
-                label="Start Number"
+                label="Start Number 123"
                 value={startRange}
                 onChange={setStartRange}
                 min={1}
