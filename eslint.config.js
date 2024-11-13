@@ -35,7 +35,12 @@ export default [
       prettier,
     },
     rules: {
-      'prettier/prettier': 'warn', // Run Prettier as a warning
+      'prettier/prettier': [
+        'warn',
+        {
+          singleQuote: true,
+        }
+      ], // Ensure consistent quote style in Prettier
     },
   },
 
@@ -71,7 +76,7 @@ export default [
           templates: true,
           lang: 'en_US',
           skipWords: [
-            'eslint', 'config', 'prettier', 'react', 'jsx', 'tsconfig',
+            'eslint', 'config', 'prettier', 'react', 'jsx', 'tsconfig', 'tsx'
           ],
           skipIfMatch: [
             '^[-\\w]+$',  // Ignore "kebab-case" or camelCase words
@@ -93,9 +98,9 @@ export default [
       'no-trailing-spaces': 'error',
       'eol-last': ['error', 'always'],
       'no-multiple-empty-lines': ['error', { max: 1 }],
-      'indent': ['error', 2],
+      //'indent': ['error', 2],
       'semi': ['error', 'always'],
-      'quotes': ['error', 'single'],
+      //'quotes': 'off', // Disable ESLint's quotes rule if necessary
       'no-mixed-spaces-and-tabs': 'error',
     },
   },
