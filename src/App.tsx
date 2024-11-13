@@ -65,11 +65,11 @@ function App() {
         {!started ? (
           <div className="bg-white p-8 rounded-2xl shadow-lg">
             <h2 className="text-2xl font-bold text-purple-600 mb-6">
-              Setup Your Practice
+              Setup Your Practice:
             </h2>
             <div className="flex flex-wrap gap-8 mb-8">
               <NumberInput
-                label="Start Number 123"
+                label="Start Number"
                 value={startRange}
                 onChange={setStartRange}
                 min={1}
