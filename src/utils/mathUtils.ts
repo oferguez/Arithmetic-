@@ -18,16 +18,6 @@ export const generateExercises = (start: number, end: number, count: number) => 
         num2 = Math.floor(Math.random() * num1) + start;
         answer = num1 - num2;
         break;
-      case '×':
-        num1 = Math.floor(Math.random() * (Math.min(end, 10) - start + 1)) + start;
-        num2 = Math.floor(Math.random() * (Math.min(end, 10) - start + 1)) + start;
-        answer = num1 * num2;
-        break;
-      case '÷':
-        num2 = Math.floor(Math.random() * (Math.min(end, 10) - start + 1)) + start;
-        answer = Math.floor(Math.random() * (Math.min(end, 10) - start + 1)) + start;
-        num1 = num2 * answer;
-        break;
     }
 
     exercises.push({ num1, num2, operation, answer });
