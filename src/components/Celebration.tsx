@@ -36,7 +36,7 @@ export const Celebration: React.FC = () => {
           <Heart className="w-16 h-16 text-pink-500" />
         </div>
         <h2 className="text-4xl font-bold text-purple-600 bg-white px-8 py-4 rounded-full shadow-lg">
-          Amazing Job! 🎉
+          Well done!! Amazing Job! 🎉
         </h2>
       </animated.div>
     </div>
