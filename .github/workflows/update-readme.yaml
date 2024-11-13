@@ -11,8 +11,8 @@ jobs:
   hijob:
     runs-on: ubuntu-latest
     steps:
-      -name: yo
-      run: echo yo
+      - name: say yo
+        run: echo yoyo
      
   update-readme:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Only run if the previous workflow succeeded
