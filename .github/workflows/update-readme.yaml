@@ -5,6 +5,7 @@ on:
     workflows: ["pages-build-deployment"]  # Triggered by the "pages-build-deployment" workflow
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   update-readme:
