@@ -8,7 +8,10 @@ interface ExerciseCardProps {
   onAnswer: (correct: boolean) => void;
 }
 
-export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, onAnswer }) => {
+export const ExerciseCard: React.FC<ExerciseCardProps> = ({
+  exercise,
+  onAnswer,
+}) => {
   const [userAnswer, setUserAnswer] = useState('');
   const [shake, setShake] = useState(false);
 
@@ -20,7 +23,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, onAnswer }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const isCorrect = parseInt(userAnswer) === exercise.answer;
-    
+
     if (isCorrect) {
       onAnswer(true);
       setUserAnswer('');
@@ -37,7 +40,9 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, onAnswer }
     >
       <div className="flex items-center justify-center mb-6">
         <Star className="text-yellow-400 w-8 h-8" />
-        <h2 className="text-3xl font-bold text-purple-600 mx-4">Problem Time!</h2>
+        <h2 className="text-3xl font-bold text-purple-600 mx-4">
+          Problem Time!
+        </h2>
         <Star className="text-yellow-400 w-8 h-8" />
       </div>
 
@@ -45,7 +50,10 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, onAnswer }
         {exercise.num1} {exercise.operation} {exercise.num2} = ?
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-4"
+      >
         <input
           type="number"
           value={userAnswer}

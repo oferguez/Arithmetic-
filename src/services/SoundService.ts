@@ -19,7 +19,6 @@ export class SoundService {
   }
 
   private async playRandomSound() {
-
     // Ensure initialization
     this.init();
 
@@ -28,8 +27,11 @@ export class SoundService {
       this.playedFiles = []; // Reset once all files have been played
     }
 
-    const availableFiles = this.soundFiles.filter(file => !this.playedFiles.includes(file));
-    const randomFile = availableFiles[Math.floor(Math.random() * availableFiles.length)];
+    const availableFiles = this.soundFiles.filter(
+      (file) => !this.playedFiles.includes(file),
+    );
+    const randomFile =
+      availableFiles[Math.floor(Math.random() * availableFiles.length)];
     this.playedFiles.push(randomFile);
 
     const soundPath = `/Arithmetic-/VictorySounds/${randomFile}`;
@@ -37,7 +39,11 @@ export class SoundService {
     // Fetch and decode the audio
     const response = await fetch(soundPath);
     if (!response.ok) {
-      console.error(`Failed to fetch audio file: ${soundPath}`, response.status, response.body);
+      console.error(
+        `Failed to fetch audio file: ${soundPath}`,
+        response.status,
+        response.body,
+      );
       return;
     }
 
@@ -47,12 +53,15 @@ export class SoundService {
     try {
       audioBuffer = await this.audioContext!.decodeAudioData(arrayBuffer);
     } catch (error) {
-      console.error(`Failed!! to decode ${soundPath} with size ${arrayBuffer.byteLength} audio data:`, error);
+      console.error(
+        `Failed!! to decode ${soundPath} with size ${arrayBuffer.byteLength} audio data:`,
+        error,
+      );
       return;
     }
 
     if (!audioBuffer) {
-      console.error("Failed to decode audio: AudioContext is not initialized.");
+      console.error('Failed to decode audio: AudioContext is not initialized.');
       return;
     }
     //debugger;
@@ -60,21 +69,16 @@ export class SoundService {
 
     let startCutoff = 0;
     let endCutoff = audioBuffer.duration;
-    const randomBounds = audioBuffer.duration/2 - 1;
+    const randomBounds = audioBuffer.duration / 2 - 1;
 
-    if (audioBuffer.duration > 4)
-    {
-      
+    if (audioBuffer.duration > 4) {
       startCutoff = Math.random() * randomBounds;
       endCutoff = audioBuffer.duration - Math.random() * randomBounds;
       endCutoff = Math.min(startCutoff + 6, endCutoff);
       //console.log(`randomizing sound: ${randomFile} randomBounds: ${randomBounds} duration:${audioBuffer.duration} start cutoff: ${startCutoff} end cutoff: ${endCutoff}`);
-    }
-    else
-    {
+    } else {
       //console.log(`sound: ${randomFile} duration:${audioBuffer.duration} start cutoff: ${startCutoff} end cutoff: ${endCutoff}`);
     }
-    
 
     // const maxStartShift = Math.min(2, audioBuffer.duration - 0.5); // Max 2 seconds or within file length
     // const startShift = Math.random() * maxStartShift;
@@ -84,19 +88,21 @@ export class SoundService {
     // Play the sound with random timings
     const source = this.audioContext?.createBufferSource() ?? null;
     if (!source) {
-      console.error("Failed to createBufferSource: AudioContext is not initialized.");
+      console.error(
+        'Failed to createBufferSource: AudioContext is not initialized.',
+      );
       return;
     }
     source.buffer = audioBuffer;
 
     if (!this.gainNode) {
-      console.error("audio failure: gainNode is not initialized.");
+      console.error('audio failure: gainNode is not initialized.');
       return;
     }
     source.connect(this.gainNode);
 
     if (!this.audioContext) {
-      console.error("audio failure: audioContext is not initialized.");
+      console.error('audio failure: audioContext is not initialized.');
       return;
     }
     const duration = endCutoff - startCutoff;
@@ -107,7 +113,11 @@ export class SoundService {
     //console.log(`Playing ${randomFile} from ${startShift.toFixed(2)}s to ${endTime.toFixed(2)}s`);
   }
 
-  private createVoiceNote(frequency: number, startTime: number, duration: number) {
+  private createVoiceNote(
+    frequency: number,
+    startTime: number,
+    duration: number,
+  ) {
     if (!this.audioContext || !this.gainNode) return;
 
     // Carrier oscillator (main tone)
@@ -158,24 +168,24 @@ export class SoundService {
     // Define multiple "Well done!" melodies for random selection
     const melodies = [
       [
-        { freq: 400, duration: 0.15, time: 0 },    // We-
+        { freq: 400, duration: 0.15, time: 0 }, // We-
         { freq: 350, duration: 0.15, time: 0.15 }, // -ll
-        { freq: 500, duration: 0.25, time: 0.3 },  // do-
-        { freq: 400, duration: 0.3, time: 0.55 },  // -ne!
+        { freq: 500, duration: 0.25, time: 0.3 }, // do-
+        { freq: 400, duration: 0.3, time: 0.55 }, // -ne!
       ],
       [
-        { freq: 500, duration: 0.2, time: 0 },     // Con-
-        { freq: 600, duration: 0.15, time: 0.2 },  // -gra-
+        { freq: 500, duration: 0.2, time: 0 }, // Con-
+        { freq: 600, duration: 0.15, time: 0.2 }, // -gra-
         { freq: 700, duration: 0.25, time: 0.35 }, // -tu-
-        { freq: 800, duration: 0.3, time: 0.6 },   // -la-
-        { freq: 900, duration: 0.35, time: 0.9 },  // -tions!
+        { freq: 800, duration: 0.3, time: 0.6 }, // -la-
+        { freq: 900, duration: 0.35, time: 0.9 }, // -tions!
       ],
       [
-        { freq: 450, duration: 0.15, time: 0 },    // Awe-
+        { freq: 450, duration: 0.15, time: 0 }, // Awe-
         { freq: 500, duration: 0.15, time: 0.15 }, // -some
-        { freq: 600, duration: 0.2, time: 0.3 },   // job!
-        { freq: 700, duration: 0.3, time: 0.55 },  
-      ]
+        { freq: 600, duration: 0.2, time: 0.3 }, // job!
+        { freq: 700, duration: 0.3, time: 0.55 },
+      ],
     ];
 
     // Select a random melody each time
@@ -200,17 +210,28 @@ export class SoundService {
         const sparkleGain = this.audioContext.createGain();
 
         sparkle.type = 'sine';
-        sparkle.frequency.setValueAtTime(1000 + Math.random() * 1000, this.audioContext.currentTime);
-        sparkle.frequency.exponentialRampToValueAtTime(2000 + Math.random() * 2000, this.audioContext.currentTime + 0.1);
+        sparkle.frequency.setValueAtTime(
+          1000 + Math.random() * 1000,
+          this.audioContext.currentTime,
+        );
+        sparkle.frequency.exponentialRampToValueAtTime(
+          2000 + Math.random() * 2000,
+          this.audioContext.currentTime + 0.1,
+        );
 
         sparkleGain.gain.setValueAtTime(0.2, this.audioContext.currentTime);
-        sparkleGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.1);
+        sparkleGain.gain.exponentialRampToValueAtTime(
+          0.01,
+          this.audioContext.currentTime + 0.1,
+        );
 
         sparkle.connect(sparkleGain);
         sparkleGain.connect(this.gainNode);
 
         sparkle.start(this.audioContext.currentTime + sparkleLen * i);
-        sparkle.stop(this.audioContext.currentTime + sparkleLen * i + sparkleLen);
+        sparkle.stop(
+          this.audioContext.currentTime + sparkleLen * i + sparkleLen,
+        );
       }
     }, 850);
   }

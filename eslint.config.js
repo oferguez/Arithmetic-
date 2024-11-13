@@ -39,7 +39,7 @@ export default [
         'warn',
         {
           singleQuote: true,
-        }
+        },
       ], // Ensure consistent quote style in Prettier
     },
   },
@@ -76,16 +76,22 @@ export default [
           templates: true,
           lang: 'en_US',
           skipWords: [
-            'eslint', 'config', 'prettier', 'react', 'jsx', 'tsconfig', 'tsx'
+            'eslint',
+            'config',
+            'prettier',
+            'react',
+            'jsx',
+            'tsconfig',
+            'tsx',
           ],
           skipIfMatch: [
-            '^[-\\w]+$',  // Ignore "kebab-case" or camelCase words
-            '^\\/.*$',    // Ignore paths (e.g., "/home/user")
+            '^[-\\w]+$', // Ignore "kebab-case" or camelCase words
+            '^\\/.*$', // Ignore paths (e.g., "/home/user")
           ],
           skipWordIfMatch: [
-            '^\\w{1,2}$'  // Ignore very short words (1-2 characters)
+            '^\\w{1,2}$', // Ignore very short words (1-2 characters)
           ],
-          minLength: 3,   // Ignore words with fewer than 3 characters
+          minLength: 3, // Ignore words with fewer than 3 characters
         },
       ],
     },
@@ -99,7 +105,7 @@ export default [
       'eol-last': ['error', 'always'],
       'no-multiple-empty-lines': ['error', { max: 1 }],
       //'indent': ['error', 2],
-      'semi': ['error', 'always'],
+      semi: ['error', 'always'],
       //'quotes': 'off', // Disable ESLint's quotes rule if necessary
       'no-mixed-spaces-and-tabs': 'error',
     },
