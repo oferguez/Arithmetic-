@@ -7,5 +7,5 @@ export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  base: mode === 'production' ? '/Arithmetic-/' : '/',
+  //base: mode === 'production' ? '/Arithmetic-/' : '/',
 }));
