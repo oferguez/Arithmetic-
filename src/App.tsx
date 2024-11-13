@@ -65,7 +65,7 @@ function App() {
         {!started ? (
           <div className="bg-white p-8 rounded-2xl shadow-lg">
             <h2 className="text-2xl font-bold text-purple-600 mb-6">
-              Setup Your Practice:
+              Please Setup Your Practice:
             </h2>
             <div className="flex flex-wrap gap-8 mb-8">
               <NumberInput
