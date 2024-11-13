@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "echo 'To start the server, run npm run start-dev manually';",
     "start-dev": "vite",
-    "build": "vite build",
+    "build": "vite build --debug",
     "lint": "eslint .",
     "preview": "vite preview --debug",
     "predeploy": "npm run build",
