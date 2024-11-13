@@ -42,4 +42,5 @@ jobs:
           git commit -m "Update README with latest build info"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACTIONS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
