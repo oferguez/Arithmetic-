@@ -33,10 +33,14 @@ jobs:
       - name: Update README.md
         run: |
           # Replace the lines starting with "- **Commit Hash**:" and "- **Build Time**:" with new values
+          echo "before:"
+          cat README.md
           echo "COMMIT_HASH=${COMMIT_HASH}"
           echo "COMMIT_TIMESTAMP=${COMMIT_TIMESTAMP}"
           sed -i "s|^-\s\*\*Commit Hash\*\*.*|**Commit Hash**: $COMMIT_HASH|g" README.md
           sed -i "s|^-\s\*\*Build Time\*\*.*|**Build Time**: $COMMIT_TIMESTAMP|g" README.md
+          echo "after:
+          cat README.md
 
       - name: Commit and push changes
         run: |
