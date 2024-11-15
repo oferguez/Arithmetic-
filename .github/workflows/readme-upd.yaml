@@ -21,30 +21,18 @@ jobs:
 
       - name: Get the latest commit information
         run: |
-          echo "GH Env: = {$GITHUB_ENV}"
-          cat $GITHUB_ENV
-          echo 
           COMMIT_HASH=$(git rev-parse --short HEAD)
           COMMIT_TIMESTAMP=$(git log -1 --format=%cd --date=format:'%Y-%m-%d %H:%M:%S')
           echo "COMMIT_HASH=${COMMIT_HASH}" >> $GITHUB_ENV
           echo "COMMIT_TIMESTAMP=${COMMIT_TIMESTAMP}" >> $GITHUB_ENV          
-          echo
 
       - name: Update README.md
         run: |
           # Replace the lines starting with "- **Commit Hash**:" and "- **Build Time**:" with new values
-          echo "-----------------------"
-          echo "before:"
-          cat README.md
-          echo "-----------------------"
           echo "COMMIT_HASH=${COMMIT_HASH}"
           echo "COMMIT_TIMESTAMP=${COMMIT_TIMESTAMP}"
           sed -i "s|^**Commit Hash\*\*.*|**Commit Hash**: $COMMIT_HASH|g" README.md
           sed -i "s|^**Build Time\*\*.*|**Build Time**: $COMMIT_TIMESTAMP|g" README.md
-          echo "-----------------------"
-          echo "after:"
-          cat README.md
-          echo "-----------------------"
 
       - name: Commit and push changes
         run: |
