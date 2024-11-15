@@ -8,11 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  hijob:
-    runs-on: ubuntu-latest
-    steps:
-      - name: say hello
-        run: echo hello
      
   update-readme:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Only run if the previous workflow succeeded
@@ -31,8 +26,9 @@ jobs:
 
       - name: Update README.md
         run: |
-          sed -i "s|<!-- COMMIT_HASH -->|$COMMIT_HASH|g" README.md
-          sed -i "s|<!-- COMMIT_TIMESTAMP -->|$COMMIT_TIMESTAMP|g" README.md
+          # Replace the lines starting with "- **Commit Hash**:" and "- **Build Time**:" with new values
+          sed -i "s|^-\s\*\*Commit Hash\*\*.*|**Commit Hash**: $COMMIT_HASH|g" README.md
+          sed -i "s|^-\s\*\*Build Time\*\*.*|**Build Time**: $COMMIT_TIMESTAMP|g" README.md
 
       - name: Commit and push changes
         run: |
