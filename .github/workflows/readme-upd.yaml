@@ -21,10 +21,18 @@ jobs:
 
       - name: Get the latest commit information
         run: |
+          echo "GH Env: = {$GITHUB_ENV}"
+          cat $GITHUB_ENV
+          echo 
           COMMIT_HASH=$(git rev-parse --short HEAD)
           COMMIT_TIMESTAMP=$(git log -1 --format=%cd --date=format:'%Y-%m-%d %H:%M:%S')
           echo "COMMIT_HASH=${COMMIT_HASH}"
           echo "COMMIT_TIMESTAMP=${COMMIT_TIMESTAMP}"
+          echo "COMMIT_HASH=${COMMIT_HASH}" >> $GITHUB_ENV
+          echo "COMMIT_TIMESTAMP=${COMMIT_TIMESTAMP}" >> $GITHUB_ENV          
+          echo "GH Env: = {$GITHUB_ENV}"
+          cat $GITHUB_ENV
+          echo
 
       - name: Update README.md
         run: |
