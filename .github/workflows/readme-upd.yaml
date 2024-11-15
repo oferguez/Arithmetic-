@@ -10,7 +10,9 @@ on:
 jobs:
      
   update-readme:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Only run if the previous workflow succeeded
+    
+    #if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Only run if the previous workflow succeeded
+    
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +23,8 @@ jobs:
         run: |
           COMMIT_HASH=$(git rev-parse --short HEAD)
           COMMIT_TIMESTAMP=$(git log -1 --format=%cd --date=format:'%Y-%m-%d %H:%M:%S')
+          echo "COMMIT_HASH=${COMMIT_HASH}"
+          echo "COMMIT_TIMESTAMP=${COMMIT_TIMESTAMP}"
 
       - name: Update README.md
         run: |
