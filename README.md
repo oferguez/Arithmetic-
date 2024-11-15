@@ -4,11 +4,11 @@
 
 ## Status
 
-[![Build Status](https://github.com/oferguez/Arithmetic-/workflows/Build%20and%20Deploy/badge.svg)](https://oferguez/Arithmetic-/repository/actions)
+[![Build Status](https://github.com/oferguez/Arithmetic-/workflows/Build%20and%20Deploy/badge.svg)](https://github.com/oferguez/Arithmetic-/repository/actions)
 
 ## Trigger Build
 
-[Trigger Build Workflow](https://github.com/username/repo/actions/workflows/build.yml)
+[Trigger Build Workflow](https://github.com/oferguez/Arithmetic-/actions/workflows/build.yml)
 
 ## Latest Build Information
 
