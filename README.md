@@ -4,7 +4,8 @@
 
 # My Project
 
-[![Build Status](https://github.com/oferguez/Arithmetic-/workflows/Update%20README%20with%20Latest%20Build%20Info/badge.svg)](https://github.com/oferguez/Arithmetic-/actions)
+[![Build Status](https://github.com/oferguez/Arithmetic-/workflows/Build%20and%20Deploy/badge.svg?timestamp=${new Date().getTime()})](https://oferguez/Arithmetic-/repository/actions)
+
 
 ### Latest Build Information
 
