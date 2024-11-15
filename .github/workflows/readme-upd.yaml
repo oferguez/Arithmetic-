@@ -39,8 +39,8 @@ jobs:
           echo "-----------------------"
           echo "COMMIT_HASH=${COMMIT_HASH}"
           echo "COMMIT_TIMESTAMP=${COMMIT_TIMESTAMP}"
-          sed -i "s|^-\s\*\*Commit Hash\*\*.*|**Commit Hash**: $COMMIT_HASH|g" README.md
-          sed -i "s|^-\s\*\*Build Time\*\*.*|**Build Time**: $COMMIT_TIMESTAMP|g" README.md
+          sed -i "s|^**Commit Hash\*\*.*|**Commit Hash**: $COMMIT_HASH|g" README.md
+          sed -i "s|^**Build Time\*\*.*|**Build Time**: $COMMIT_TIMESTAMP|g" README.md
           echo "-----------------------"
           echo "after:"
           cat README.md
