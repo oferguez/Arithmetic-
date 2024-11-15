@@ -1,0 +1,32 @@
+name: Build and Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        env:
+          # Use the GH_TOKEN secret to authenticate
+          GIT_USER: 'oferguez'
+          GIT_TOKEN: ${{ secrets.GH_ACTIONS }}
+        run: |
+          echo GIT_TOKEN: $GIT_TOKEN
+          echo GIT_USER: $GIT_USER
+          git config --global user.name "oferguez"
+          git config --global user.email "guez.ofer@gmail.com"
+          npx gh-pages -d dist --repo https://$GIT_TOKEN@github.com/oferguez/Arithmetic-.git
