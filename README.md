@@ -8,7 +8,7 @@
 
 ## Trigger Build
 
-[Trigger Build Workflow](https://github.com/oferguez/Arithmetic-/actions/workflows/build-deploy.yml)
+[Trigger Build Workflow](https://github.com/oferguez/Arithmetic-/actions/workflows/build-deploy.yaml)
 
 ## Latest Build Information
 
