@@ -29,4 +29,19 @@ jobs:
           echo GIT_USER: $GIT_USER
           git config --global user.name "oferguez"
           git config --global user.email "guez.ofer@gmail.com"
-          npx gh-pages -d dist --repo https://$GIT_TOKEN@github.com/oferguez/Arithmetic-.git
+          
+          # npx gh-pages -d dist --repo https://$GIT_TOKEN@github.com/oferguez/Arithmetic-.git
+          # Run npx gh-pages and store its output and exit code
+          DEPLOY_OUTPUT=$(npx gh-pages -d dist -f --repo https://$GIT_TOKEN@github.com/oferguez/Arithmetic-.git)
+          EXIT_CODE=$?
+      
+          # Print the output and the exit code
+          echo "npx gh-pages output:"
+          echo "$DEPLOY_OUTPUT"
+          echo "Exit code: $EXIT_CODE"
+      
+          # Optionally fail the job if the exit code indicates an error
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "Deployment failed with exit code $EXIT_CODE"
+            exit $EXIT_CODE
+          fi
